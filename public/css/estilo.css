@@ -119,3 +119,7 @@ body{
 .btn-rosa-conta:hover {
   background-color: #ff1493; /* Cor de fundo mais escura ao passar o mouse */
 }
+
+.navbar-brand {
+  font-family: 'Dancing Script', cursive;
+}

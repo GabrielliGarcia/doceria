@@ -13,8 +13,7 @@
             <table class="table table-bordered dataTable">
                 <thead>
                     <td>ID</td>
-                    <td>Nome</td>   
-                    <td>Marca</td>   
+                    <td>Nome</td>     
                     <td>Categoria</td>                
                     <td>Situação</td>
                     <td>Descrição</td>
@@ -24,7 +23,6 @@
                         <tr>
                             <td>{{$dados["id"]}}</td>
                             <td>{{$dados["nome"]}}</td>
-                            <td>{{$dados["marca"]}}</td>
                             <td>{{$dados["cat"]}}</td>
                             <td>ativo</td>
                             <td>{!!$dados["descricao"]!!}</td>

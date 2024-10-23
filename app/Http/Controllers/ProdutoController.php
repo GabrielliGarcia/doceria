@@ -17,13 +17,10 @@ class ProdutoController extends Controller
         
            $produtos = Produto::select("produto.id",
                                        "produto.nome",
-                                       "produto.quantidade",
                                        "produto.preco",
                                        "categoria.nome AS cat",
-                                       "marca.nome as marca",
                                        "produto.descricao")
                                     ->join("categoria","categoria.id", "=", "produto.id_categoria")
-                                    ->join("marca","marca.id", "=", "produto.id_marca") 
                                     ->orderBy("produto.id")                                       
                                     ->get();
 
@@ -32,8 +29,7 @@ class ProdutoController extends Controller
 
     public function inserir(){
         $categorias = Categoria::all()->toArray();  //select de categorias - laravel
-        $marcas = Marca::all()->toArray();      
-        return view("Produto.formulario",['categorias' => $categorias,'marcas' => $marcas]);        
+        return view("Produto.formulario",['categorias' => $categorias]);        
     }
 
     public function excluir($id){
@@ -45,8 +41,7 @@ class ProdutoController extends Controller
     public function alterar($id){
         $produto = Produto::find($id)->toArray();
         $categorias = Categoria::all()->toArray();  //select de categorias - laravel
-        $marcas = Marca::all()->toArray(); 
-        return View("Produto.formulario",['produto'=>$produto,'categorias' => $categorias,'marcas' => $marcas]);             
+        return View("Produto.formulario",['produto'=>$produto,'categorias' => $categorias]);             
     }
 
   public function salvar_novo(Request $request)
@@ -57,9 +52,7 @@ class ProdutoController extends Controller
       $produto->nome = $request->input("nome");
       $produto->id_categoria = $request->input("id_categoria");
       $produto->preco = $request->input("preco");
-      $produto->quantidade = $request->input("quantidade");
       $produto->descricao = $request->input("descricao");
-      $produto->id_marca = $request->input("marca");
   
       // Upload e salvamento da imagem
       if ($request->hasFile('imagem')) {    
@@ -81,9 +74,7 @@ class ProdutoController extends Controller
         $produto->nome = $request->input("nome");
         $produto->id_categoria = $request->input("id_categoria");
         $produto->preco = $request->input("preco");
-        $produto->quantidade = $request->input("quantidade");
         $produto->descricao = $request->input("descricao");
-        $produto->id_marca = $request->input("marca");
 
         if ($request->hasFile('imagem')) {    
             $requestImage = $request->file('imagem');

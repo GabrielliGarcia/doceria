@@ -7,9 +7,7 @@
     $input_nome = "";    
     $input_id = "";
     $input_preco = "";
-    $input_quantidade = "";
     $input_id_categoria = "";
-    $input_id_marca = "";
     $input_descricao = "";
 
 
@@ -19,9 +17,7 @@
         $input_nome = $produto["nome"];        
         $input_id = $produto["id"];
         $input_preco = $produto["preco"];
-        $input_quantidade = $produto["quantidade"];
         $input_id_categoria = $produto["id_categoria"];
-        $input_id_marca = $produto["id_marca"];
         $input_descricao = $produto["descricao"];
     }
 @endphp
@@ -44,19 +40,11 @@
                         <option value='{{$dado["id"]}}' {{$dado["id"] == $input_id_categoria  ? 'selected' : ''}}>{{$dado['nome']}}</option>
                     @endforeach
                 </select>  
-                <label class="form-label">Marcas</label>
-                <select class="form-control" name='marca'>           
-                    @foreach($marcas as $dado)
-                        <option value='{{$dado["id"]}}' {{$dado["id"] == $input_id_marca  ? 'selected' : ''}}>{{$dado['nome']}}</option>
-                    @endforeach
-                </select>
+                
                  
 
                 <label class="form-label">Preço</label>
                 <input class="form-control" name="preco" placeholder="Preço do produto" value="{{$input_preco}}"> 
-
-                <label class="form-label">Quantidade</label>
-                <input class="form-control" name="quantidade" placeholder="Quantidade do produto" value="{{$input_quantidade}}"> 
 
                 <label class="form-label">Descricao</label>
                 <textarea class="form-control" id="descricao" name="descricao" placeholder="Descrição do item"> {{$input_descricao}}</textarea>

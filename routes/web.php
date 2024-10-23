@@ -3,22 +3,11 @@
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\ComprasController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\CategoriaController;
-use App\Http\Controllers\CorController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\VendasController;
 use App\Http\Controllers\AuthController;
 
-
-Route::group(['prefix' => 'marca'], function(){
-    Route::get('/',[MarcaController::class,'index']);
-    Route::get('/novo',[MarcaController::class,'inserir']);    
-    Route::post('/novo',[MarcaController::class,'salvar_novo']);        
-    Route::get('/excluir/{id}',[MarcaController::class,'excluir']);
-    Route::get('/update/{id}',[MarcaController::class,'alterar']);
-    Route::post('/update',[MarcaController::class,'salvar_update']);
-});
 
 Route::group(['prefix' => 'categoria'], function(){
     Route::get('/',[CategoriaController::class,'index']);
@@ -29,17 +18,10 @@ Route::group(['prefix' => 'categoria'], function(){
     Route::post('/update',[CategoriaController::class,'salvar_update']);
 });
 
-Route::group(['prefix' => 'cor'], function(){
-    Route::get('/',[CorController::class,'index']);
-    Route::get('/novo',[CorController::class,'inserir']);    
-    Route::post('/novo',[CorController::class,'salvar_novo']);   
-    Route::get('/excluir/{id}',[CorController::class,'excluir']);
-    Route::get('/update/{id}',[CorController::class,'alterar']);
-    Route::post('/update',[CorController::class,'salvar_update']);
-});
+
 
 Route::group(['prefix' => 'produto'], function(){
-    Route::get('/',[ProdutoController::class,'index']);
+    Route::get('/',[ProdutoController::class,'index'])->name('produto.index');
     Route::get('/novo',[ProdutoController::class,'inserir']);   
     Route::post('/novo',[ProdutoController::class,'salvar_novo']);
     Route::get('/excluir/{id}',[ProdutoController::class,'excluir']);
@@ -52,7 +34,6 @@ Route::group(['prefix' => 'produto'], function(){
 Route::group(['prefix' => 'vendas'], function(){
     Route::get('/',[VendasController::class,'index']); 
     Route::get('/comprar/{id}',[VendasController::class,'comprar']);    
-    Route::get('/marca/{id}',[VendasController::class,'searchMarca']);
     Route::get('/categoria/{id}', [VendasController::class, 'searchCategoria']);   
     Route::get('/carrinho/{id}', [VendasController::class, 'adicionarAoCarrinho'])->name('adicionar-ao-carrinho');
     Route::get('/exibir-carrinho', [VendasController::class, 'exibirCarrinho'])->name('exibir-carrinho');  
@@ -66,11 +47,6 @@ Route::group(['prefix' => 'compras'], function(){
 });
 
 
-
-
-Route::get('/', [MarcaController::class,'index']);
-
-
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
@@ -81,5 +57,12 @@ Route::get('/', [VendasController::class, 'index'])->name('vendas.index');
 
 Route::middleware(['auth'])->get('/minha-conta', [AuthController::class, 'minhaConta'])->name('minha-conta');
 
+Route::get("/registrarAdmin", function() {
+    return view ("templateAdmin.registrarAdmin");
+})->name('registrar');
+Route::post("/registrarAdmin", [AuthController::class, 'registerAdmin']);
 
-
+Route::get("/loginAdmin", function() {
+    return view ("templateAdmin.loginAdmin");
+});
+Route::post("/loginAdmin", [AuthController::class, 'loginAdmin']);

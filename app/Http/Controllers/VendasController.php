@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\Models\Produto;
 use App\Models\Categoria;
-use App\Models\Marca;
 use App\Models\Vendas;
 use Illuminate\Support\Facades\Session;
 use App\Classes\Carrinho;
@@ -17,81 +16,50 @@ class VendasController extends Controller
         
            $vendas = Produto::select("produto.id",
                                        "produto.nome",
-                                       "produto.quantidade",
                                        "produto.preco",
                                        "categoria.nome AS cat",
-                                       "marca.nome as marca",
                                        "produto.descricao",
                                        "produto.imagem")
                                     ->join("categoria","categoria.id", "=", "produto.id_categoria")
-                                    ->join("marca","marca.id", "=", "produto.id_marca")
                                     ->orderBy("produto.id") 
                                     ->get();
 
-            $categorias = Categoria::all()->toArray();  
-            $marcas = Marca::all()->toArray();   
+            $categorias = Categoria::all()->toArray();    
 
-        return view("Vendas.index",["vendas"=>$vendas,'categorias' => $categorias,'marcas' => $marcas]);
+        return view("Vendas.index",["vendas"=>$vendas,'categorias' => $categorias]);
     }
 
     public function comprar($id){    
         $produto = Produto::find($id)->toArray();
-        $categorias = Categoria::all()->toArray();  //select de categorias - laravel
-        $marcas = Marca::all()->toArray();            
-        return View("Vendas.comprar",['produto'=>$produto,'categorias' => $categorias,'marcas' => $marcas]);             
+        $categorias = Categoria::all()->toArray();  //select de categorias - laravel            
+        return View("Vendas.comprar",['produto'=>$produto,'categorias' => $categorias]);             
     }
 
     public function carrinho($id){    
         $produto = Produto::find($id)->toArray();
         $categorias = Categoria::all()->toArray();  //select de categorias - laravel
-        $marcas = Marca::all()->toArray();  
-        
+  
         
 
-        return View("Vendas.carrinho",['produto'=>$produto,'categorias' => $categorias,'marcas' => $marcas]);             
+        return View("Vendas.carrinho",['produto'=>$produto,'categorias' => $categorias]);             
     }
 
-    public function searchMarca($id){    
-        $vendas = Produto::select("produto.id",
-                                  "produto.nome",
-                                  "produto.quantidade",
-                                  "produto.preco",
-                                  "categoria.nome AS cat",
-                                  "marca.nome as marca",
-                                  "produto.descricao",
-                                  "produto.imagem")
-                                  ->join("categoria","categoria.id", "=", "produto.id_categoria")
-                                  ->join("marca","marca.id", "=", "produto.id_marca")
-                                  ->where("marca.id", "=", $id)
-                                  ->orderBy("produto.id") 
-                                  ->get();
-
-        $categorias = Categoria::all()->toArray();  
-        $marcas = Marca::all()->toArray();   
-
-        return view("Vendas.index",["vendas"=>$vendas,'categorias' => $categorias,'marcas' => $marcas]);
-             
-    }
 
     public function searchCategoria($id){    
         $vendas = Produto::select("produto.id",
                                   "produto.nome",
-                                  "produto.quantidade",
                                   "produto.preco",
                                   "categoria.nome AS cat",
-                                  "marca.nome as marca",
                                   "produto.descricao",
                                   "produto.imagem")
                           ->join("categoria","categoria.id", "=", "produto.id_categoria")
-                          ->join("marca","marca.id", "=", "produto.id_marca")
                           ->where("categoria.id", "=", $id)
                           ->orderBy("produto.id") 
                           ->get();
     
-        $categorias = Categoria::all()->toArray();  
-        $marcas = Marca::all()->toArray();   
+        $categorias = Categoria::all()->toArray();    
     
-        return view("Vendas.index", ["vendas" => $vendas, 'categorias' => $categorias, 'marcas' => $marcas]);
+        return view("Vendas.index", ["vendas" => $vendas, 'categorias' => $categorias]);
     }   
 
     public function adicionarAoCarrinho($id)
@@ -113,8 +81,6 @@ class VendasController extends Controller
     // Percorra o carrinho para verificar se o produto já está presente
     foreach ($carrinho as $key => $item) {
         if ($item['id'] == $produto->id) {
-            // Se o produto já estiver no carrinho, aumente a quantidade
-            $carrinho[$key]['quantidade'] += 1;
             $produtoNoCarrinho = true;
             break;
         }
@@ -127,7 +93,6 @@ class VendasController extends Controller
             'nome' => $produto->nome,
             'preco' => $produto->preco,
             'imagem' => $produto->imagem,
-            'quantidade' => 1,
             // Adicione outros detalhes do produto, se necessário
         ];
         $carrinho[] = $novoItem;
@@ -182,9 +147,9 @@ class VendasController extends Controller
         // Recupere o conteúdo do carrinho da sessão
         $carrinho = Session::get('carrinho', []);
         $categorias = Categoria::all()->toArray();  
-        $marcas = Marca::all()->toArray();  
+
         
-        return view('vendas.carrinho', ['carrinho' => $carrinho,'categorias' => $categorias, 'marcas' => $marcas]);
+        return view('vendas.carrinho', ['carrinho' => $carrinho,'categorias' => $categorias]);
     }
 
     public function finalizarCompra(Request $request){
@@ -200,7 +165,6 @@ class VendasController extends Controller
                 $venda = new Vendas();
                 $venda->email = $request->input("email");
                 $venda->codigo_produto = $item['id'];
-                $venda->quantidade = $item['quantidade'];
                 $venda->save();
             }
     

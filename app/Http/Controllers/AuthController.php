@@ -69,4 +69,48 @@ class AuthController extends Controller
         return view('minha-conta', compact('user')); // Retorna a view da conta com os dados do usuário
     }
 
+    public function registerAdmin(Request $request)
+    {
+        // Validação dos dados
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        // Criação do usuário
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+        ]);
+
+        // Autenticar o usuário
+        Auth::login($user);
+
+        // Redirecionar ou retornar uma resposta
+        return redirect()->route('produto.index')->with('success', 'Registro concluído com sucesso!');
+    }
+
+    public function loginAdmin(Request $request){
+        // Validação dos dados
+        $credentials = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+
+        // Verificar as credenciais e autenticar o usuário
+        if (Auth::attempt($credentials)) {
+            // Login bem-sucedido
+            $request->session()->regenerate();
+
+            return redirect()->route('produto.index')->with('success', 'Login bem-sucedido!');
+        }
+
+        // Se as credenciais estiverem erradas
+        return back()->withErrors([
+            'email' => 'As credenciais fornecidas estão incorretas.',
+        ]);
+    }
+
 }

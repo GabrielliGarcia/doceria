@@ -68,21 +68,13 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Produtos</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/marca">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Marcas</span></a>
-            </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="/categoria">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Categorias</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/cor">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Cores</span></a>
-            </li>
+           
             <li class="nav-item">
                 <a class="nav-link" href="/compras">
                     <i class="fas fa-fw fa-tachometer-alt"></i>

@@ -32,7 +32,6 @@ $totalFinalFormatado = 0.00;
     $input_preco = isset($produto) ? $produto["preco"] : null;
     $input_quantidade = isset($produto) ? $produto["quantidade"] : null;
     $input_id_categoria = isset($produto) ? $produto["id_categoria"] : null;
-    $input_id_marca = isset($produto) ? $produto["id_marca"] : null;
     $input_descricao = isset($produto) ? $produto["descricao"] : null;
     $input_imagem = isset($produto) ? $produto["imagem"] : null;
 @endphp
@@ -67,16 +66,6 @@ $totalFinalFormatado = 0.00;
             @foreach($categorias as $dado)
               <a class="dropdown-item" href="/vendas/categoria/{{$dado['id']}}">{{$dado["nome"]}}</a>
             @endforeach                
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Marcas
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            @foreach($marcas as $dado)
-              <a class="dropdown-item" href="/vendas/marca/{{$dado['id']}}">{{$dado["nome"]}}</a>
-            @endforeach 
             </div>
           </li>
       </ul>      

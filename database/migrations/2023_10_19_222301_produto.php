@@ -14,10 +14,8 @@ return new class extends Migration
         Schema::create('produto', function (Blueprint $table) {
             $table->id();
             $table->integer("id_categoria");
-            $table->integer("id_marca");            
             $table->string("nome");
             $table->decimal("preco", 10, 2);
-            $table->integer("quantidade");
             $table->string("descricao");   
             $table->string("imagem");           
             $table->timestamps();
