@@ -120,24 +120,23 @@ class AuthController extends Controller
 
 
     public function atualizarConta(Request $request){
+        $user = Auth::user();
 
-    $user = Auth::user();
+        // Validação dos dados
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'rua' => 'nullable|string|max:255',
+            'numero' => 'nullable|string|max:20',
+            'bairro' => 'nullable|string|max:255',
+            'cep' => 'nullable|string|max:20',
+            'telefone' => 'nullable|string|max:20',
+        ]);
 
-    // Validação dos dados
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-        'rua' => 'nullable|string|max:255',
-        'numero' => 'nullable|string|max:20',
-        'bairro' => 'nullable|string|max:255',
-        'cep' => 'nullable|string|max:20',
-        'telefone' => 'nullable|string|max:20',
-    ]);
+        // Atualização dos dados do usuário
+        \DB::table('users')->where('id', $user->id)->update($validatedData);
 
-    // Atualização dos dados do usuário
-    \DB::table('users')->where('id', $user->id)->update($validatedData);
-
-    return redirect()->route('minha-conta')->with('success', 'Informações atualizadas com sucesso!');
+        return redirect()->route('minha-conta')->with('success', 'Informações atualizadas com sucesso!');
     }
 
 
