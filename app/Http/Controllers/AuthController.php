@@ -138,6 +138,4 @@ class AuthController extends Controller
 
         return redirect()->route('minha-conta')->with('success', 'Informações atualizadas com sucesso!');
     }
-
-
 }
