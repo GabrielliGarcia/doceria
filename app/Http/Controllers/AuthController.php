@@ -65,11 +65,16 @@ class AuthController extends Controller
     
     public function minhaConta(){ 
 
-        $user = Auth::user(); // Pega o usuário logado
-        return view('minha-conta', compact('user')); // Retorna a view da conta com os dados do usuário
+        $user = Auth::user();
+        
+        if (!$user) {
+            return redirect()->route('login')->withErrors('Você precisa estar logado para acessar sua conta.');
+        }
+
+        return view('login.minhaConta', compact('user'));
     }
 
-    public function registerAdmin(Request $request)
+    public function registrarAdmin(Request $request)
     {
         // Validação dos dados
         $validatedData = $request->validate([
@@ -89,7 +94,7 @@ class AuthController extends Controller
         Auth::login($user);
 
         // Redirecionar ou retornar uma resposta
-        return redirect()->route('produto.index')->with('success', 'Registro concluído com sucesso!');
+        return redirect()->route('loginAdmin')->with('success', 'Registro concluído com sucesso!');
     }
 
     public function loginAdmin(Request $request){
@@ -112,5 +117,28 @@ class AuthController extends Controller
             'email' => 'As credenciais fornecidas estão incorretas.',
         ]);
     }
+
+
+    public function atualizarConta(Request $request){
+
+    $user = Auth::user();
+
+    // Validação dos dados
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        'rua' => 'nullable|string|max:255',
+        'numero' => 'nullable|string|max:20',
+        'bairro' => 'nullable|string|max:255',
+        'cep' => 'nullable|string|max:20',
+        'telefone' => 'nullable|string|max:20',
+    ]);
+
+    // Atualização dos dados do usuário
+    \DB::table('users')->where('id', $user->id)->update($validatedData);
+
+    return redirect()->route('minha-conta')->with('success', 'Informações atualizadas com sucesso!');
+    }
+
 
 }

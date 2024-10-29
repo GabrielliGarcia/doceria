@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Suspire</title>
+    <title>Suspire 🧁</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/estilo.css') }}">
@@ -46,6 +46,7 @@
           </li>
       </ul>      
 
+
       @if(Auth::check())
         <!-- Exibe o botão "Minha conta" se o usuário estiver logado -->
         <span class="navbar-text">
@@ -69,6 +70,26 @@
 </section>
     <section class="conteudo">
       @csrf
+
+    <!-- Nova seção para a imagem e o texto -->
+          
+    <div class="container borda-container">
+        <div class="row align-items-start">
+            <div class="col">
+                <h2 class="mt-4 texto-bem-vindo">Bem-vindo à Suspire, a melhor loja de doces!</h2>
+                <br>
+                <p class="mt-2 texto-bem-vindo fs-5">Pensada e criada para alimentar além do corpo, a alma! Aqui você encontra os mais deliciosos doces feitos com muito carinho!</p>
+            </div>
+            <div class="col-auto">
+                <img src="{{ asset('img/produtos/doce.png') }}" class="img-fluid mb-3" alt="Doce">
+            </div>
+        </div>
+    </div>
+
+    </br>
+    
+    <hr class="sidebar-divider d-none d-md-block">
+
     <div class="card_title">
       <div class="card">
         <div class="card-body text-center">          

@@ -30,7 +30,6 @@ $totalFinalFormatado = 0.00;
     $input_nome = isset($produto) ? $produto["nome"] : null;
     $input_id = isset($produto) ? $produto["id"] : null;
     $input_preco = isset($produto) ? $produto["preco"] : null;
-    $input_quantidade = isset($produto) ? $produto["quantidade"] : null;
     $input_id_categoria = isset($produto) ? $produto["id_categoria"] : null;
     $input_descricao = isset($produto) ? $produto["descricao"] : null;
     $input_imagem = isset($produto) ? $produto["imagem"] : null;
@@ -89,7 +88,6 @@ $totalFinalFormatado = 0.00;
                             <tr>
                                 <th scope="col"></th>
                                 <th scope="col">Produto</th>
-                                <th scope="col">Quantidade</th>
                                 <th scope="col">Preço Unitário</th>
                                 <th scope="col">Total Produto</th>
                                 <th scope="col"></th>
@@ -101,13 +99,8 @@ $totalFinalFormatado = 0.00;
     <tr>
         <td><img src="{{ asset('img/produtos/' . $produto['imagem']) }}"></td>
         <td>{{ $produto['nome'] }}</td>
-        <td>
-            <a href="/vendas/carrinho/remover/{{$produto['id']}}" class="hiperlink">➖</a>
-            {{ $produto['quantidade'] }}
-            <a href="/vendas/carrinho/{{$produto['id']}}" class="hiperlink"> ➕</a>
-        </td>
         <td>R$ {{ $produto['preco'] }}</td>
-        <td>R$ {{ $total = $produto['preco'] * $produto['quantidade'] }}</td>
+        <td>R$ {{ $total = $produto['preco'] }}</td>
         <td><a href="/vendas/carrinho/excluir/{{$produto['id']}}" class="hiperlink">🗑️</a></td>
     </tr>
     <?php
@@ -131,6 +124,7 @@ $totalFinalFormatado = 0.00;
             <button type="submit" class="btn btn-success btn-lg">✔️ Finalizar Compra</button>
         </form>
     </div>
+
                 </div>
                 <div class="col-2">
                     <caption>

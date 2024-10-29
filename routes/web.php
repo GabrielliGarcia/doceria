@@ -1,13 +1,12 @@
 <?php
 
-use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\ComprasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\VendasController;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\CheckoutController;
 
 Route::group(['prefix' => 'categoria'], function(){
     Route::get('/',[CategoriaController::class,'index']);
@@ -59,10 +58,21 @@ Route::middleware(['auth'])->get('/minha-conta', [AuthController::class, 'minhaC
 
 Route::get("/registrarAdmin", function() {
     return view ("templateAdmin.registrarAdmin");
-})->name('registrar');
-Route::post("/registrarAdmin", [AuthController::class, 'registerAdmin']);
+})->name('registrarAdmin');
+Route::post("/registrarAdmin", [AuthController::class, 'registrarAdmin']);
 
 Route::get("/loginAdmin", function() {
     return view ("templateAdmin.loginAdmin");
+})->name('loginAdmin');
+Route::post("/loginAdmin", [AuthController::class, 'loginAdmin'])->name('loginAdmin');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/produto', [ProdutoController::class, 'index'])->name('produto.index');
+    // outras rotas que precisam de autenticação
 });
-Route::post("/loginAdmin", [AuthController::class, 'loginAdmin']);
+
+Route::post('/vendas/finalizar-compra', [CheckoutController::class, 'criarPagamento']);
+
+Route::get('/minha-conta', [AuthController::class, 'minhaConta'])->middleware('auth')->name('minha-conta');
+
+Route::post('/minha-conta/atualizar', [AuthController::class, 'atualizarConta'])->middleware('auth')->name('minha-conta.atualizar');

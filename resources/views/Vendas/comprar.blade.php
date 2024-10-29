@@ -2,8 +2,8 @@
     if(isset($produto)){             
         $input_nome = $produto["nome"];              
         $input_id = $produto["id"];         
-        $input_preco = $produto["preco"];
-        $input_quantidade = $produto["quantidade"];       
+        $input_preco = $produto["preco"];    
+        $input_descricao = strip_tags($produto["descricao"]);
         $input_imagem = $produto["imagem"];        
     }    
 @endphp
@@ -42,16 +42,6 @@
             @endforeach                
             </div>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Marcas
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            @foreach($marcas as $dado)
-              <a class="dropdown-item" href="/vendas/marca/{{$dado['id']}}">{{$dado["nome"]}}</a>
-            @endforeach 
-            </div>
-          </li>
       </ul>      
       <span class="navbar-text">
         <a class="btn btn-outline-light" href="/vendas/exibir-carrinho">🛒 Carrinho</a>
@@ -77,9 +67,16 @@
                                 </p>
                             </h2>
                             </br>
+                            <h5>
+                            <p class="card-text">
+                                Descrição: {{$input_descricao}}
+                            </p>
+                            </h5>
+                            </br>
                             <h4>
                                 <p class="card-text">
                                     Preço: R$ {{$input_preco}}
+                                </p>
                             </h4>
                             </br>
                             <div class="d-grid gap-2 col-6 mx-auto">

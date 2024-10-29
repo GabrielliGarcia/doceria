@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Comme:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arima:wght@100..700&display=swap');
+
 
 body{
     background: rgb(214, 174, 180);
@@ -27,7 +29,7 @@ body{
 }
 
 .col-md-8{
-    background: rgb(11, 85, 21);
+    background: rgb(199, 142, 150);
     padding-top: 100px;
 }
 
@@ -71,7 +73,7 @@ body{
   .col-2{
     
     padding-top: 15px;
-    padding-left: 150px;
+    padding-left: 10px;
   }
 
   .list-group{
@@ -121,5 +123,18 @@ body{
 }
 
 .navbar-brand {
-  font-family: 'Dancing Script', cursive;
+  font-family: "Arima", system-ui;
+}
+
+.texto-bem-vindo {
+  font-family: "Arima", system-ui;  
+
+}
+
+.borda-container {
+  border: 2px solid #5A5A5A; /* Cor e espessura da borda */
+  border-radius: 8px; /* Arredonda os cantos da borda */
+  padding: 20px; /* Espaçamento interno */
+  margin: 20px 100px; /* Espaçamento externo */
+  background-color: #f8f9fa; /* Cor de fundo opcional */
 }

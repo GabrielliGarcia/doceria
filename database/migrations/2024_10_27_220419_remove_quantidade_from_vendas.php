@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vendas', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string("email"); 
-            $table->integer("codigo_produto");
-            
+        Schema::table('vendas', function (Blueprint $table) {
+            //
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_vendas');
+        Schema::table('vendas', function (Blueprint $table) {
+            $table->decimal("quantidade", 10, 2); // ou o tipo de dados original que você usava
+        });
     }
 };
